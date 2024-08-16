@@ -1,6 +1,7 @@
 package praktikum;
 
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -12,6 +13,7 @@ import praktikum.pages.ScooterMainPage;
 //Тесты для проверки правильности ответа при клике на вопрос
 @RunWith(Parameterized.class)
 public class ScooterTest {
+    WebDriver driver;
 
     //Определил все нужные поля для параметризации
     private final String fieldId;
@@ -26,7 +28,6 @@ public class ScooterTest {
     //Создаем объект класса DriverRule, для дальнейшего выбора браузера
     @Rule
     public DriverRule factory = new DriverRule();
-
 
     //Сами данные для теста
         @Parameterized.Parameters
@@ -43,10 +44,15 @@ public class ScooterTest {
             };
         }
 
+    //Получаем созданный драйвер с опциями
+    @Before
+    public void initializeDriver() {
+        driver = factory.getDriver();
+    }
+
     //Сам тест
     @Test
-    public void specialTest() {
-        WebDriver driver = factory.getDriver();
+    public void CorrectnessOfTheAnswersInQuestionAnswerSectionTest() {
         //Объект страницы ScooterMainPage
         ScooterMainPage scooterMainPage = new ScooterMainPage(driver);
         //Одним методом кликаем и проверям правильность ответа на вопрос

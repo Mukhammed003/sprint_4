@@ -1,9 +1,12 @@
 package praktikum;
 
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runner.manipulation.Ordering;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +19,7 @@ import praktikum.windows.WantToPlaceAnOrderWindow;
 //Тесты для заказа самоката
 @RunWith(Parameterized.class)
 public class OrderTest {
+    WebDriver driver;
     //Определил все нужные поля для параметризации
     private final String name;
     private final String surname;
@@ -53,11 +57,15 @@ public class OrderTest {
         };
     }
 
+    //Получаем созданный драйвер с опциями
+    @Before
+    public void initializeDriver() {
+        driver = factory.getDriver();
+    }
+
     //Сам тест
     @Test
-    public void specialTest() {
-        WebDriver driver = factory.getDriver();
-
+    public void TheFullFlowOfOrderingAScooter() {
         //Объект страницы ScooterMainPage
         ScooterMainPage scooterMainPage = new ScooterMainPage(driver);
         //Сначала кликаем по кнопке "Заказать" - в шапке
