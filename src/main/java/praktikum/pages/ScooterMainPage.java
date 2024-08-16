@@ -18,23 +18,15 @@ public class ScooterMainPage {
 
     //Форма где вопросы и ответы, использовал для скролла и ожидания загрузки
     private By questionSection = By.className("Home_SubHeader__zwi_E");
-    //Кнопка "Заказать" в шапке
-    private By orderButtonOnTheTop = By.className("Button_Button__ra12g");
-    //Кнопка "Заказать" в середине
-    private By orderButtonInTheMiddle = By.cssSelector(".Button_Middle__1CSJM");
 
     public ScooterMainPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    //Клик по кнопке "Заказать" - в шапке
-    public void clickOnOrderButtonOnTheTop() {
-        driver.findElement(orderButtonOnTheTop).click();
-    }
-
-    //Клик по кнопке "Заказать" - в середине
-    public void clickOnOrderButtonInTheMiddle() {
-        driver.findElement(orderButtonInTheMiddle).click();
+    //Клик по кнопке "Заказать"
+    public void clickOnOrderButton(String classOfButton) {
+        String link = ".//button[@class='" + classOfButton + "']";
+        driver.findElement(By.xpath(link)).click();
     }
 
     //Ожидание загрузки формы с вопросами и ответами

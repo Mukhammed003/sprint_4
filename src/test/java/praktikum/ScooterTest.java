@@ -52,7 +52,7 @@ public class ScooterTest {
 
     //Сам тест
     @Test
-    public void CorrectnessOfTheAnswersInQuestionAnswerSectionTest() {
+    public void correctnessOfTheAnswersInQuestionAnswerSectionTest() {
         //Объект страницы ScooterMainPage
         ScooterMainPage scooterMainPage = new ScooterMainPage(driver);
         //Одним методом кликаем и проверям правильность ответа на вопрос

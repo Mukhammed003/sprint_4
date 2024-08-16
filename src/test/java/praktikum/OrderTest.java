@@ -21,6 +21,7 @@ import praktikum.windows.WantToPlaceAnOrderWindow;
 public class OrderTest {
     WebDriver driver;
     //Определил все нужные поля для параметризации
+    private final String classOfOrderButton;
     private final String name;
     private final String surname;
     private final String address;
@@ -32,7 +33,8 @@ public class OrderTest {
     private final String comment;
 
     //Конструктор для полей
-    public OrderTest(String name, String surname, String address, String metroStation, String phoneNumber, String date, String rentalPeriod, String colour, String comment) {
+    public OrderTest(String classOfOrderButton, String name, String surname, String address, String metroStation, String phoneNumber, String date, String rentalPeriod, String colour, String comment) {
+        this.classOfOrderButton = classOfOrderButton;
         this.name = name;
         this.surname = surname;
         this.address = address;
@@ -52,8 +54,8 @@ public class OrderTest {
     @Parameterized.Parameters
     public static Object[][] getData() {
        return new Object[][] {
-                {"Криштиану", "Роналду", "Пушкинская 122", "6", "87777777777", "21", "пятеро суток", "black", "Нет комментов"},
-                {"Лионель", "Месси", "Абая 157", "1", "86666666666", "25", "трое суток", "grey", "Есть комменты"},
+                {"Button_Button__ra12g", "Криштиану", "Роналду", "Пушкинская 122", "6", "87777777777", "21", "пятеро суток", "black", "Нет комментов"},
+                {"Button_Button__ra12g Button_Middle__1CSJM", "Лионель", "Месси", "Абая 157", "1", "86666666666", "25", "трое суток", "grey", "Есть комменты"},
         };
     }
 
@@ -65,11 +67,11 @@ public class OrderTest {
 
     //Сам тест
     @Test
-    public void TheFullFlowOfOrderingAScooter() {
+    public void theFullFlowOfOrderingAScooter() {
         //Объект страницы ScooterMainPage
         ScooterMainPage scooterMainPage = new ScooterMainPage(driver);
-        //Сначала кликаем по кнопке "Заказать" - в шапке
-        scooterMainPage.clickOnOrderButtonOnTheTop();
+        //Сначала кликаем по кнопке "Заказать"
+        scooterMainPage.clickOnOrderButton(classOfOrderButton);
 
         //Объект страницы ForWhoScooterPage
         ForWhoScooterPage forWhoScooterPage = new ForWhoScooterPage(driver);
@@ -90,24 +92,6 @@ public class OrderTest {
 
         //Объект окна OrderPlacedWindow
         OrderPlacedWindow orderPlacedWindow = new OrderPlacedWindow(driver);
-        //Проверяем на наличие текста "Заказ оформлен"
-        orderPlacedWindow.checkPresenceMessage();
-
-        driver.get(Constants.URL_OF_SITE);
-        //Теперь кликаем по кнопке "Заказать" - в середине
-        scooterMainPage.clickOnOrderButtonInTheMiddle();
-
-        //Одним методом заполняем все поля на этой форме
-        forWhoScooterPage.fillingInTheFieldsForWhoScooterForm(name, surname, address, metroStation, phoneNumber);
-
-        //Одним методом заполняем все поля на этой форме
-        aboutRentPage.fillingInTheFieldsAboutRentForm(date, rentalPeriod, colour, comment);
-
-        //Ожидание загрузки окна
-        wantToPlaceAnOrderWindow.waitWantToPlaceAnOrderWindowLoading();
-        //Кликаем по кнопке "Да"
-        wantToPlaceAnOrderWindow.clickToYesButton();
-
         //Проверяем на наличие текста "Заказ оформлен"
         orderPlacedWindow.checkPresenceMessage();
     }
