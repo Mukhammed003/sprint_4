@@ -8,6 +8,8 @@ import praktikum.Constants;
 
 import java.time.Duration;
 
+import static org.junit.Assert.assertEquals;
+
 //Форма "Для кого самокат"
 public class ForWhoScooterPage {
     private WebDriver driver;
@@ -27,6 +29,18 @@ public class ForWhoScooterPage {
     private By phoneNumberField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
     //Кнопка "Далее"
     private By nextButton = By.xpath(".//button[text()='Далее']");
+    //Логотип скутера
+    private By scooterLogo = By.xpath(".//img[@alt='Scooter']");
+    //Текст ошибки у поля имя
+    private By errorTextOfNameField = By.xpath(".//div[text()='Введите корректное имя']");
+    //Текст ошибки у поля фамилия
+    private By errorTextOfSurnameField = By.xpath(".//div[text()='Введите корректную фамилию']");
+    //Текст ошибки у поля адрес
+    private By errorTextOfAddressField = By.xpath(".//div[text()='Введите корректный адрес']");
+    //Текст ошибки у поля станция метро
+    private By errorTextOfMetroStationField = By.xpath(".//div[text()='Выберите станцию']");
+    //Текст ошибки у поля номер телефона
+    private By errorTextOfPhoneNumberField = By.xpath(".//div[text()='Введите корректный номер']");
 
     public ForWhoScooterPage(WebDriver driver) {
         this.driver = driver;
@@ -72,6 +86,11 @@ public class ForWhoScooterPage {
         driver.findElement(nextButton).click();
     }
 
+    //Клик по логотипу скутера
+    public void clickOnScooterLogo() {
+        driver.findElement(scooterLogo).click();
+    }
+
     //Все действия на этой форме, создал для оптимизации
     public void fillingInTheFieldsForWhoScooterForm(String name, String surname, String address, String metroStationId, String phoneNumber) {
         waitForForWhoScooterFormLoading();
@@ -83,4 +102,11 @@ public class ForWhoScooterPage {
         clickToNextButton();
     }
 
+    public void checkingCorrectnessOfErrorTexts() {
+        assertEquals("Another error text on name field", Constants.EXPECTED_ERROR_MESSAGE_FOR_NAME_FIELD, driver.findElement(errorTextOfNameField).getText());
+        assertEquals("Another error text on surname field", Constants.EXPECTED_ERROR_MESSAGE_FOR_SURNAME_FIELD, driver.findElement(errorTextOfSurnameField).getText());
+        assertEquals("Another error text on address field", Constants.EXPECTED_ERROR_MESSAGE_FOR_ADDRESS_FIELD, driver.findElement(errorTextOfAddressField).getText());
+        assertEquals("Another error text on metro station field", Constants.EXPECTED_ERROR_MESSAGE_FOR_METRO_STATION_FIELD, driver.findElement(errorTextOfMetroStationField).getText());
+        assertEquals("Another error text on phone number field", Constants.EXPECTED_ERROR_MESSAGE_FOR_PHONE_NUMBER_FIELD, driver.findElement(errorTextOfPhoneNumberField).getText());
+    }
 }

@@ -1,6 +1,5 @@
 package praktikum;
 
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 import praktikum.pages.ScooterMainPage;
 //Тесты для проверки правильности ответа при клике на вопрос
 @RunWith(Parameterized.class)
-public class ScooterTest {
+public class CorrectnessOfAnswerTest {
     WebDriver driver;
 
     //Определил все нужные поля для параметризации
@@ -20,7 +19,7 @@ public class ScooterTest {
     private final String expectedAnswer;
 
     //Конструктор для полей
-    public ScooterTest(String fieldId, String expectedAnswer) {
+    public CorrectnessOfAnswerTest(String fieldId, String expectedAnswer) {
         this.fieldId = fieldId;
         this.expectedAnswer = expectedAnswer;
     }

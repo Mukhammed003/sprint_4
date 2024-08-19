@@ -10,7 +10,10 @@ import praktikum.Constants;
 
 import java.time.Duration;
 
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+
 
 //Главная страница Яндекс.самокат
 public class ScooterMainPage {
@@ -18,6 +21,16 @@ public class ScooterMainPage {
 
     //Форма где вопросы и ответы, использовал для скролла и ожидания загрузки
     private By questionSection = By.className("Home_SubHeader__zwi_E");
+    //Текст "Самокат на пару дней"
+    private By textOnTheMainPage = By.className("Home_Header__iJKdX");
+    //Логотип Яндекса
+    private By yandexLogo = By.xpath(".//img[@alt='Yandex']");
+    //Кнопка статус заказа
+    private By orderStatusButton = By.xpath(".//button[@class='Header_Link__1TAG7']");
+    //Поле для ввода номера заказа
+    private By orderNumberField = By.xpath(".//input[@placeholder='Введите номер заказа']");
+    //Кнопка Go
+    private By goButton = By.xpath(".//button[text()='Go!']");
 
     public ScooterMainPage(WebDriver driver) {
         this.driver = driver;
@@ -53,6 +66,43 @@ public class ScooterMainPage {
         new WebDriverWait(driver, Duration.ofSeconds(Constants.EXPLICIT_WAIT))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(link)));
         assertEquals("No such text", realAnswer, driver.findElement(By.xpath(link)).getText());
+    }
+
+    //Проверка на наличие текста "Самокат на пару дней"
+    public void checkPresenceTextOnTheMainPage() {
+        new WebDriverWait(driver, Duration.ofSeconds(Constants.EXPLICIT_WAIT))
+                .until(ExpectedConditions.visibilityOfElementLocated(textOnTheMainPage));
+        assertThat(driver.findElement(textOnTheMainPage).getText(), startsWith(Constants.EXPECTED_TEXT_ON_THE_MAIN_PAGE));
+    }
+
+    //Клик по логотипу яндекса
+    public void clickOnYandexLogo() {
+        driver.findElement(yandexLogo).click();
+    }
+
+    //Проверка что новый открышийся сайт это Яндекс Дзен
+    public void checkTheNewWindowIsYandex() {
+        Object[] windowHandles=driver.getWindowHandles().toArray();
+        driver.switchTo().window((String) windowHandles[1]);
+        String title =driver.getTitle();
+        assertEquals("You are on the wrong site", Constants.EXPECTED_TITLE_OF_YANDEX_DZEN, title);
+    }
+
+    //Клип по кнопке статус заказа
+    public void clickOnOrderStatusButton() {
+        driver.findElement(orderStatusButton).click();
+    }
+
+    //Заполнение поля для номера заказа
+    public void enterDataToOrderNumberField(String orderNumber) {
+        new WebDriverWait(driver, Duration.ofSeconds(Constants.EXPLICIT_WAIT))
+                .until(ExpectedConditions.visibilityOfElementLocated(orderNumberField));
+        driver.findElement(orderNumberField).sendKeys(orderNumber);
+    }
+
+    //Клик по кнопке Go
+    public void clickOnGoButton() {
+        driver.findElement(goButton).click();
     }
 
     //Весь флоу в одном тесте, создал для оптимизации
